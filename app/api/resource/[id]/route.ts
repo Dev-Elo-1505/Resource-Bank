@@ -54,3 +54,34 @@ export async function PUT(
     return NextResponse.json({ error: "Failed to update resource." });
   }
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+  try {
+    const resource = await prisma.resource.findUnique({
+      where: { id: Number(id) },
+    });
+    if (!resource) {
+      return NextResponse.json(
+        { error: "Resource not found." },
+        { status: 404 }
+      );
+    }
+
+    await prisma.resource.delete({
+      where: { id: Number(id) },
+    });
+    return NextResponse.json(
+      { message: "Resource deleted successfully." },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to delete resource." },
+      { status: 500 }
+    );
+  }
+}
