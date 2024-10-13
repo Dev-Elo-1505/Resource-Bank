@@ -4,9 +4,13 @@ import Header from "./components/Header";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen">
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <button className="bg-primary text-white rounded p-2 m-2"><Link href="/resource">New Resource</Link></button>
+      <main className="flex-grow px-20">
+        <button className="bg-primary text-white rounded p-2 m-2">
+          <Link href="/resource">New Resource</Link>
+        </button>
+      </main>
       <Footer />
     </div>
   );
