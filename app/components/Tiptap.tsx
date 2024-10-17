@@ -3,7 +3,6 @@
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Link from "next/link";
 import {
   FaBold,
   FaHeading,
@@ -41,10 +40,13 @@ const Tiptap = () => {
   const onSubmit = handleSubmit(async (data: ResourceForm) => {
     setLoading(true);
     try {
+      console.log(data)
       await axios.post("/api/resource", data);
+      console.log("Data sent successfully")
       router.push("/");
     } catch (error) {
       setError("An unexpected error has occured.");
+      console.log(error)
     } finally {
       setLoading(false);
     }
@@ -227,8 +229,8 @@ const Tiptap = () => {
           )}
         </div>
         <div>
-          <button className="bg-primary text-white rounded p-2 m-2">
-            <Link href="/">New Resource</Link>
+          <button type="submit" className="bg-primary text-white rounded p-2 m-2">
+            Add Resource
           </button>
         </div>
       </form>

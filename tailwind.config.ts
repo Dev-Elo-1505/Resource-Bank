@@ -10,6 +10,8 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#ad37ab",
+        textBadge: "#333",
+        bgBadge: "#f0f0f0"
       },
     },
   },
