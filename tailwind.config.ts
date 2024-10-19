@@ -11,10 +11,10 @@ const config: Config = {
       colors: {
         primary: "#ad37ab",
         textBadge: "#333",
-        bgBadge: "#f0f0f0"
+        bgBadge: "#f0f0f0",
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
 export default config;

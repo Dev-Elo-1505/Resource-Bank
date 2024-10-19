@@ -1,9 +1,10 @@
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import prisma from "@/prisma/client";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt, FaEdit } from "react-icons/fa";
 
 interface Prop {
   params: { id: string };
@@ -29,6 +30,9 @@ const ResourceDetailPage = async ({ params }: Prop) => {
           <span>{resource.createdAt.toDateString()}</span>
         </div>
         <p className="text-justify mt-5">{resource.description}</p>
+        <button className="flex gap-2 items-center bg-primary text-white rounded py-2 px-4 mt-4">
+            <Link href={`/resource/${resource.id}/edit`}>Edit</Link> <FaEdit />
+          </button>
       </section>
       <Footer />
     </div>

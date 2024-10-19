@@ -20,12 +20,13 @@ import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Resource } from "@prisma/client";
 
 const CategoryEnum = z.enum(["BLOG", "VIDEO", "LINK", "OTHER"]);
 
 type ResourceForm = z.infer<typeof addResourceSchema>;
 
-const Tiptap = () => {
+const Tiptap = ({resource}: {resource? : Resource}) => {
   const {
     register,
     control,
@@ -54,7 +55,7 @@ const Tiptap = () => {
 
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    content: "",
+    content: resource?.description || "",
   });
 
   if (!editor) return null;
@@ -67,6 +68,7 @@ const Tiptap = () => {
           </label>
           <input
             {...register("title")}
+            defaultValue={resource?.title}
             type="text"
             className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary placeholder-gray-500"
             id="title"
@@ -84,6 +86,7 @@ const Tiptap = () => {
           </label>
           <select
             {...register("category")}
+            defaultValue={resource?.category}
             className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary appearance-none"
             id="category"
             name="category"
@@ -108,6 +111,7 @@ const Tiptap = () => {
           </label>
           <input
             {...register("url")}
+            defaultValue={resource?.url}
             type="url"
             className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary placeholder-gray-500"
             id="url"
@@ -218,8 +222,8 @@ const Tiptap = () => {
               render={({ field }) => (
                 <EditorContent
                   editor={editor}
-                  className="border p-4 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary min-h-52"
-                  onBlur={() => field.onChange(editor.getText())}
+                  className="prose border p-4 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary min-h-52"
+                  onBlur={() => field.onChange(editor.getHTML())}
                 />
               )}
             />
