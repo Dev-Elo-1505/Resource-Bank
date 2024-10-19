@@ -46,6 +46,7 @@ const Tiptap = ({ resource }: { resource?: Resource }) => {
       else await axios.post("/api/resource", data);
       console.log("Data sent successfully");
       router.push("/");
+      router.refresh();
     } catch (error) {
       setError("An unexpected error has occured.");
       console.log(error);
