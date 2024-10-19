@@ -30,32 +30,31 @@ export default async function Home() {
         </div>
         <section className="flex justify-between items-center mt-10 mb-4 flex-wrap">
           {resources.map((resource) => (
-            <article
-              key={resource.id}
-              className="flex flex-col shadow-md rounded-lg w-72 h-80 mb-6"
-            >
-              <div className="bg-primary p-3 rounded-t-lg">
-                <h1 className="text-center font-bold text-2xl text-white">
-                  {resource.title}
-                </h1>
-              </div>
-              <div className="p-3 flex-grow">
-                <p>
-                  {resource.description.split(" ").length > 30
-                    ? `${resource.description
-                        .split(" ")
-                        .slice(0, 30)
-                        .join(" ")}...`
-                    : resource.description.split(" ").slice(0, 30).join(" ")}
-                </p>
-              </div>
-              <div className="p-3 flex justify-between items-center">
-                <p className="bg-bgBadge text-sm text-textBadge rounded-full px-2 text-center">
-                  {resource.category}
-                </p>
-                <p>{resource.createdAt.toDateString()}</p>
-              </div>
-            </article>
+            <Link href={`/resource/${resource.id}`} key={resource.id}>
+              <article className="flex flex-col shadow-md rounded-lg w-72 h-80 mb-6 hover:scale-105 transition-transform hover:shadow-2xl">
+                <div className="bg-primary p-3 rounded-t-lg">
+                  <h1 className="text-center font-bold text-2xl text-white">
+                    {resource.title}
+                  </h1>
+                </div>
+                <div className="p-3 flex-grow">
+                  <p>
+                    {resource.description.split(" ").length > 30
+                      ? `${resource.description
+                          .split(" ")
+                          .slice(0, 30)
+                          .join(" ")}...`
+                      : resource.description.split(" ").slice(0, 30).join(" ")}
+                  </p>
+                </div>
+                <div className="p-3 flex justify-between items-center">
+                  <p className="bg-bgBadge text-sm text-textBadge rounded-full px-2 text-center">
+                    {resource.category}
+                  </p>
+                  <p>{resource.createdAt.toDateString()}</p>
+                </div>
+              </article>
+            </Link>
           ))}
         </section>
         <button className="bg-primary text-white rounded p-2 m-2">
