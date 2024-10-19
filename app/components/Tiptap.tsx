@@ -26,7 +26,7 @@ const CategoryEnum = z.enum(["BLOG", "VIDEO", "LINK", "OTHER"]);
 
 type ResourceForm = z.infer<typeof addResourceSchema>;
 
-const Tiptap = ({resource}: {resource? : Resource}) => {
+const Tiptap = ({ resource }: { resource?: Resource }) => {
   const {
     register,
     control,
@@ -41,13 +41,14 @@ const Tiptap = ({resource}: {resource? : Resource}) => {
   const onSubmit = handleSubmit(async (data: ResourceForm) => {
     setLoading(true);
     try {
-      console.log(data)
-      await axios.post("/api/resource", data);
-      console.log("Data sent successfully")
+      console.log(data);
+      if (resource) await axios.put("/api/resource/" + resource.id, data);
+      else await axios.post("/api/resource", data);
+      console.log("Data sent successfully");
       router.push("/");
     } catch (error) {
       setError("An unexpected error has occured.");
-      console.log(error)
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -223,7 +224,7 @@ const Tiptap = ({resource}: {resource? : Resource}) => {
                 <EditorContent
                   editor={editor}
                   className="prose border p-4 rounded-lg focus:outline-none focus:ring-0 focus:ring-primary focus:border-primary min-h-52"
-                  onBlur={() => field.onChange(editor.getHTML())}
+                  onBlur={() => field.onChange(editor.getText())}
                 />
               )}
             />
@@ -233,8 +234,11 @@ const Tiptap = ({resource}: {resource? : Resource}) => {
           )}
         </div>
         <div>
-          <button type="submit" className="bg-primary text-white rounded p-2 m-2">
-            Add Resource
+          <button
+            type="submit"
+            className="bg-primary text-white rounded p-2 m-2"
+          >
+            {resource ? "Update Resource" : "Add Resource"}
           </button>
         </div>
       </form>
